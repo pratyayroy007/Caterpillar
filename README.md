@@ -1,10 +1,10 @@
-# Smart Operator Assistant for CAT Machinery 🚜⚡
+# Smart Operator Assistant for CAT Machinery 
 
 An intelligent, context-aware operational assistant and industrial cockpit designed for **Caterpillar heavy machinery operators and fleet supervisors**. Grounded in 1,000 real-world CAN-bus telematics records across 17 machines, 8 construction sites, and 3 shifts, combined with Caterpillar Standard Operating Procedures (SOP), OSHA 1926 standards, and the **Caterpillar 2030 Sustainability Target**.
 
 ---
 
-## 🌟 Key Capabilities & Architecture
+##  Key Capabilities & Architecture
 
 ```
                                   [ Caterpillar Industrial Cockpit ]
@@ -35,27 +35,27 @@ An intelligent, context-aware operational assistant and industrial cockpit desig
   [ Structured Response Assembly & In-Cab Recommendation ] ──────────────────────────────┘
 ```
 
-### 1. 🛡️ Real-Time Safety Command
+### 1.  Real-Time Safety Command
 - **Safety Risk Score**: Dynamic composite scoring (0–100) factoring unfastened seatbelts, ocular fatigue signals (Cat Driver Safety System), and harsh events.
 - **Dynamic 5-Meter Proximity Exclusion Zone**: Interactive radar widget simulating the 5-meter safety bubble with distance controls (0.5m to 8.0m) and emergency implement lock protocols.
 - **Chronological Incident Timeline**: Live filterable log with severity classification (`CRITICAL`, `HIGH`, `MEDIUM`) and operator attribution.
 - **Cat Sim Safety Protocols**: Pre-loaded SOPs for 3-point contact, proximity radar, operator fatigue cooldown, and hydraulic overpressure.
 
-### 2. ⚙️ Machine Digital Twin
+### 2.  Machine Digital Twin
 - **17 Machine Fleet**: Switch instantly across all 17 units (`EXC001`–`EXC005`, `BDZ001`–`BDZ003`, `MGR001`–`MGR002`, `WLD001`–`WLD004`, `BHL001`–`BHL003`).
 - **Composite Triple Metrics**: Machine Health %, Fleet Utilization Rate %, and Safety Compliance %.
 - **CAN-bus Telematics Dials**: Engine Temperature (°C), Hydraulic Pressure (psi), Vibration Level (G-index), and Fuel Burn Rate (L/hr).
 - **OEM Technical Specs**: Net rated power, operating weight, bucket/blade capacity, and recent shift cycles.
 
-### 3. 📊 Fleet Equipment & Field Operations
-- **Operator-Friendly Status Cards**: Clear machine names and model descriptions (e.g. `Cat 320 Next Gen Excavator [EXC001]`) with plain-English warnings and highlighted *"👉 What The Operator Should Do"* callouts.
+### 3.  Fleet Equipment & Field Operations
+- **Operator-Friendly Status Cards**: Clear machine names and model descriptions (e.g. `Cat 320 Next Gen Excavator [EXC001]`) with plain-English warnings and highlighted *"What The Operator Should Do"* callouts.
 - **Caterpillar 2030 Climate Commitment Action Plan**: Demystified corporate ESG targets into practical in-cab habits (Auto-Idle 3 Min, Eco-Mode, Break-Time Key-Off). Interactive idle cut simulator calculating fuel liters saved, CO2 avoided, and dollar OPEX reduction.
 - **Cross-Fleet Comparison Visuals**:
   - Hourly fuel burn rates by machine type (from Backhoe ~5.5 L/h to Wheel Loader ~8.6 L/h).
   - Job site wait times and haul queues across 8 sites (Nagpur, Chennai, Bengaluru, etc.).
   - Shift safety watch analyzing morning, afternoon, and night shift fatigue patterns.
 
-### 4. 🎮 Cat Training Simulation Models
+### 4.  Cat Training Simulation Models
 - **Interactive In-Cab Scenarios**:
   1. *Excavator Hydraulic Stall in Hard Rock* (3,150 psi pressure spike).
   2. *Proximity Exclusion Alert During Swing* (3.8m pinch hazard).
@@ -72,7 +72,7 @@ An intelligent, context-aware operational assistant and industrial cockpit desig
 
 ---
 
-## 📁 Repository Structure
+##  Repository Structure
 
 ```
 Caterpillar/
@@ -121,7 +121,7 @@ Caterpillar/
 
 ---
 
-## 🚀 Quickstart Guide
+##  Quickstart Guide
 
 ### Prerequisites
 - **Python**: 3.11+ (tested on 3.13)
@@ -191,7 +191,7 @@ npm run dev
 
 ---
 
-## 🧪 Testing & Verification
+##  Testing & Verification
 
 Run the automated backend test suite to verify the ML classifiers and Copilot responses:
 
@@ -202,5 +202,5 @@ python -c "from app.services.copilot_service import copilot_service; print(copil
 
 ---
 
-## 📜 License & Acknowledgments
+##  License & Acknowledgments
 Built with ❤️ for Caterpillar Machinery Operators and Fleet Teams. Grounded in Caterpillar Standard Operating Procedures and official telematics guidelines.
