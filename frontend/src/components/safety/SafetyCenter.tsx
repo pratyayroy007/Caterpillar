@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import { SafetyOverview, SafetyProtocolItem } from "@/types";
+import { InCabCameraFeed } from "./InCabCameraFeed";
 
 interface SafetyCenterProps {
   data: SafetyOverview | null;
@@ -15,9 +16,20 @@ export function SafetyCenter({ data, protocols, selectedMachineId }: SafetyCente
   const [filterSeverity, setFilterSeverity] = useState<string>("ALL");
   const [audioEnabled, setAudioEnabled] = useState<boolean>(true);
   const [isAlarmFiring, setIsAlarmFiring] = useState<boolean>(false);
+  const [cameraOpen, setCameraOpen] = useState<boolean>(false);
+  const [liveSeatbeltState, setLiveSeatbeltState] = useState<"Fastened" | "Unfastened">(
+    data?.current_status.seatbelt_status === "Fastened" ? "Fastened" : "Unfastened"
+  );
 
   const audioCtxRef = useRef<AudioContext | null>(null);
   const prevDistanceRef = useRef<number>(simDistance);
+
+  // Sync external seatbelt status changes
+  useEffect(() => {
+    if (data?.current_status?.seatbelt_status) {
+      setLiveSeatbeltState(data.current_status.seatbelt_status as "Fastened" | "Unfastened");
+    }
+  }, [data?.current_status?.seatbelt_status]);
 
   // Synthesizes realistic Caterpillar Cat Detect in-cab buzzer sounds using Web Audio API
   const playAlarmTone = useCallback((frequency: number, duration: number, type: OscillatorType = "square") => {
@@ -217,21 +229,31 @@ export function SafetyCenter({ data, protocols, selectedMachineId }: SafetyCente
             <span className="text-xs font-bold uppercase text-neutral-400">Seatbelt Status</span>
             <span className="text-[10px] text-neutral-400 font-mono">Sensors Live</span>
           </div>
-          <div className="my-3">
+          <div className="my-3 flex items-center justify-between gap-2">
             <div
               className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-lg font-bold text-sm ${
-                data.current_status.seatbelt_status === "Fastened"
+                liveSeatbeltState === "Fastened"
                   ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/30"
                   : "bg-red-500/20 text-red-400 border border-red-500/40 animate-pulse"
               }`}
             >
               <span
                 className={`w-2.5 h-2.5 rounded-full ${
-                  data.current_status.seatbelt_status === "Fastened" ? "bg-emerald-500" : "bg-red-500"
+                  liveSeatbeltState === "Fastened" ? "bg-emerald-500" : "bg-red-500"
                 }`}
               />
-              {data.current_status.seatbelt_status}
+              {liveSeatbeltState}
             </div>
+
+            <button
+              onClick={() => setCameraOpen(true)}
+              className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-neutral-800 hover:bg-neutral-700 text-neutral-200 border border-neutral-700 hover:border-[#FFCD11]/60 hover:text-[#FFCD11] text-xs font-bold transition font-mono shadow-sm group"
+              title="Launch In-Cab Operator Optical Camera"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
+              <span>In-Cab Cam</span>
+              <span className="group-hover:translate-x-0.5 transition-transform text-[10px]">📹</span>
+            </button>
           </div>
           <p className="text-[11px] text-neutral-400">
             Unfastened shift rate: <span className="text-white font-bold">{data.aggregate_stats.unfastened_rate_pct}%</span>
@@ -526,10 +548,36 @@ export function SafetyCenter({ data, protocols, selectedMachineId }: SafetyCente
                   </div>
                 ))}
               </div>
+
+              {(prot.id === "PROT-ROPS-01" || prot.id === "PROT-DSS-03") && (
+                <div className="pt-3 border-t border-neutral-800/80 flex items-center justify-between flex-wrap gap-2">
+                  <div className="flex items-center gap-1.5 text-[11px] text-neutral-400">
+                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                    <span>Cat DSS In-Cab Optical Sensor Ready</span>
+                  </div>
+                  <button
+                    onClick={() => setCameraOpen(true)}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#FFCD11] hover:bg-[#FFD700] text-black text-xs font-bold transition shadow-sm font-mono"
+                  >
+                    <span>📹 Launch In-Cab Optical Camera</span>
+                    <span>→</span>
+                  </button>
+                </div>
+              )}
             </div>
           ))}
         </div>
       )}
+
+      {/* In-Cab Optical Camera Feed Modal */}
+      <InCabCameraFeed
+        isOpen={cameraOpen}
+        onClose={() => setCameraOpen(false)}
+        selectedMachineId={selectedMachineId}
+        initialSeatbeltStatus={liveSeatbeltState}
+        onUpdateSeatbeltStatus={(newStatus) => setLiveSeatbeltState(newStatus)}
+      />
     </div>
   );
 }
+
