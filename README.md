@@ -2,6 +2,12 @@
 
 An intelligent, context-aware operational assistant and industrial cockpit designed for **Caterpillar heavy machinery operators and fleet supervisors**. Grounded in 1,000 real-world CAN-bus telematics records across 17 machines, 8 construction sites, and 3 shifts, combined with Caterpillar Standard Operating Procedures (SOP), OSHA 1926 standards, and the **Caterpillar 2030 Sustainability Target**.
 
+[![CI](https://github.com/pratyayroy007/Caterpillar/actions/workflows/ci.yml/badge.svg)](https://github.com/pratyayroy007/Caterpillar/actions/workflows/ci.yml)
+[![FastAPI](https://img.shields.io/badge/Backend-FastAPI-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
+[![Next.js](https://img.shields.io/badge/Frontend-Next.js%2016-000000?logo=nextdotjs&logoColor=white)](https://nextjs.org)
+[![Python](https://img.shields.io/badge/Python-3.11+-3776AB?logo=python&logoColor=white)](https://python.org)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 ---
 
 ##  Key Capabilities & Architecture
